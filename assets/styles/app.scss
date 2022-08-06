@@ -1,0 +1,31 @@
+$font: "Roboto Slab", serif;
+$primary-background-color: #e4e6ec;
+$primary-color: #dc5e44;
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: $primary-background-color;
+  font-family: $font;
+  color: $primary-color;
+}
+
+header {
+  max-width: 1200px;
+  width: 100%;
+  margin: auto;
+}
+
+main {
+  max-width: 1200px;
+  margin: auto;
+}
+
+footer {
+  background-color: $primary-color;
+}
