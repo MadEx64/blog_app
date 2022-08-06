@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+<main>
+    <div class="blog-intro">
+        <img id="intro-image" src="{{ asset('images/image1.png') }}" alt="Space!"/>
+    </div>
+
+    <section class="article-section">
+        <h2>Nos Articles</h2>
+        <div class="article-container">
+            {% for article in articles %}
+            <article class="article-card">
+                <div class="article-card-header">
+                    <a href="{{ path('show_article', {'id': article.id, 'slug': article.slug}) }}">
+                        <img class="article-small-cover" src="images/article_cover/{{ article.cover }}" alt="article cover picture"/>
+                    </a>
+                </div>
+                <div class="article-card-body">
+                    <a href="{{ path('show_article', {'id': article.id, 'slug': article.slug}) }}">
+                        <h4>{{ article.title }}</h4>
+                    </a>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+</main>
+{% endblock %}

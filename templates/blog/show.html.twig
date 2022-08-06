@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Article{% endblock %}
+
+{% block body %}
+<main>
+    <button><a href="{{ path('app_blog') }}">Retour</a></button>
+    <div class="article-container">
+        <img src="{{ article.cover }}"/>
+        <h2>{{ article.title }}</h2>
+        <p>{{ article.content }}</p>
+    </div>
+</main>
+{% endblock %}
