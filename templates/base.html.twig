@@ -2,8 +2,10 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        <title>{% block title %}Blog{% endblock %}</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@800&display=swap" rel="stylesheet">
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
@@ -13,7 +15,16 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
+    <header>
+        {% block header %}
+            {{ include('blog/header.html.twig') }}
+        {% endblock %}
+    </header>
+
     <body>
         {% block body %}{% endblock %}
+        {% block footer %}
+            {{ include('blog/footer.html.twig') }}
+        {% endblock %}
     </body>
 </html>
