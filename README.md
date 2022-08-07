@@ -4,6 +4,7 @@ Simple Blog using Symfony, Twig templates, and Sass styles with webpack-encore
 Clone and run:
 - composer install
 - yarn/npm install
-- yarn/npm run dev watch
+- yarn/npm run watch
+- create database with doctrine, then make:migration
 
-then navigate to localhost/admin/blog to get the admin page
+Navigate to localhost/admin/blog to get the admin page
