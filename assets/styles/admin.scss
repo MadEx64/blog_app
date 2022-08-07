@@ -1,0 +1,21 @@
+.table-container {
+  padding-bottom: 10px;
+  padding-top: 30px;
+  color: black;
+
+  table {
+    border: 2px solid black;
+  }
+
+  th {
+    padding: 1rem;
+    border: 2px solid black;
+    text-align: center;
+  }
+
+  td {
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid black;
+  }
+}

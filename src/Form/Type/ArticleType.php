@@ -6,11 +6,11 @@ use App\Entity\Article;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\Image;
 
 class ArticleType extends AbstractType
 {
@@ -18,23 +18,24 @@ class ArticleType extends AbstractType
   {
     $builder
       ->add('title', TextType::class)
-      ->add('content', TextareaType::class)
+      ->add('content', CKEditorType::class)
       ->add('cover', FileType::class, [
         // make it optional so you don't have to re-upload the cover file
         // every time you edit the article details
+        'mapped' => false,
         'required' => false,
         'constraints' => [
-          new File([
-            'maxSize' => '1024k',
+          new Image([
+            'maxSize' => '5M',
             'mimeTypes' => [
               'image/jpeg',
               'image/png',
+              'image/webp'
             ],
-            'mimeTypesMessage' => 'Please upload a valid PNG OR JPG document',
+            'mimeTypesMessage' => 'Veuillez sélectionner un fichier valide(jpg, png, webp)',
           ])
         ],
-      ])
-      ->add('save', SubmitType::class);
+      ]);
   }
 
   public function configureOptions(OptionsResolver $resolver): void

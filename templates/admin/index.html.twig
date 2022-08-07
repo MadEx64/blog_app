@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Liste des articles
+{% endblock %}
+
+{% block body %}
+<main>
+  <div class="container text-center">
+    <h3 class="pt-4 pb-4">Article List</h3>
+    <a class="p-3" href="{{ path('add_article') }}">Add an article</a>
+  </div>
+  <div class="table-container">
+    <table>
+      <thead>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Content</th>
+        <th>Slug</th>
+        <th>Cover</th>
+        <th>Created at</th>
+        <th>Action</th>
+      </thead>
+      <tbody>
+        {% for article in articles %}
+          <tr>
+            <td>{{ article.id }}</td>
+            <td>{{ article.title }}</td>
+            <td>{{ article.content }}</td>
+            <td>{{ article.slug }}</td>
+            <td>{{ article.cover }}</td>
+            <td>{{ article.createdAt | date("d/m/Y H:i:s") }}</td>
+            <td><a href="{{ path('article_edit', {'id': article.id}) }}">Edit</a>{{ include('admin/delete.html.twig') }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</main>
+
+{% endblock %}

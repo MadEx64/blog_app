@@ -51,11 +51,14 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @Route("/blog/add", name="add_article")
+     * @Route("/article/add", name="add_article")
+     * @Route("/admin/blog/{id}/edit", name="article_edit")
      */
-    public function add(Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger): Response
+    public function createorUpdate(Article $article = null, Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger): Response
     {
-        $article = new Article();
+        if (!$article) {
+            $article = new Article();
+        }
 
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
@@ -65,24 +68,29 @@ class BlogController extends AbstractController
 
             //cover file upload
             if ($cover) {
-                $fileName = uniqid() . '.' . $cover->guessExtension();
                 $destination = $this->getParameter('kernel.project_dir') . '/public/images/article_cover';
+                $originalFilename = pathinfo($cover->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = $originalFilename . '-' . uniqid() . '.' . $cover->guessExtension();
+
                 try {
                     $cover->move(
                         $destination,
-                        $fileName
+                        $newFilename
                     );
                 } catch (FileException $e) {
                     return new Response($e->getMessage());
                 }
 
-                $article->setCover($fileName);
+                $article->setCover($newFilename);
             }
 
             $article->setSlug(
                 strtolower($slugger->slug($article->getTitle())) . "-" . uniqid()
             );
-            $article->setCreatedAt(new \DateTime());
+
+            if (!$article->getID()) {
+                $article->setCreatedAt(new \DateTime());
+            }
 
             // persist Data to database
             $manager = $doctrine->getManager();
@@ -95,8 +103,9 @@ class BlogController extends AbstractController
             ]);
         }
 
-        return $this->renderForm('blog/add.html.twig', [
-            'form' => $form,
+        return $this->render('/admin/form.html.twig', [
+            'form' => $form->createView(),
+            'edit' => $article->getId() !== null
         ]);
     }
 }
